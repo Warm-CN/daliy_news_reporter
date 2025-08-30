@@ -8,6 +8,7 @@ from newsapi import NewsApiClient
 import smtplib
 from email.mime.text import MIMEText
 from email.header import Header
+from email.utils import formataddr
 import requests
 from dotenv import load_dotenv
 
@@ -161,8 +162,9 @@ def format_email_body(summaries, inspiration):
 def send_email(html_content, subject):
     logging.info(f"准备使用SMTP服务 ({SMTP_HOST}) 发送邮件...")
     message = MIMEText(html_content, 'html', 'utf-8')
-    message['From'] = Header(f"每日新闻助手 <{MAIL_SENDER}>", 'utf-8')
-    message['To'] = Header(f"订阅者 <{MAIL_RECEIVER}>", 'utf-8')
+    message['From'] = formataddr(("每日新闻助手", MAIL_SENDER))
+    message['To'] = formataddr(("订阅者", MAIL_RECEIVER))
+    
     message['Subject'] = Header(subject, 'utf-8')
     try:
         if SMTP_PORT == 465:
