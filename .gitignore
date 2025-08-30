@@ -177,3 +177,5 @@ Thumbs.db
 *.bak
 *.swp
 *~
+
+gemini.py
